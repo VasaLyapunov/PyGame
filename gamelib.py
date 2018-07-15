@@ -9,6 +9,13 @@ import os
 if os.name == 'nt':
     import msvcrt
 
+# Constant variables
+GUI_LENGTH = 100
+GUI_ENTITY_SPACE = 10
+GUI_PLAYER_INDEX = 5
+GUI_ENEMY_INDEX = 25
+MAX_ENEMY_COUNT = 3
+
 # Clears the console
 def clear():
     os.system('cls' if os.name=='nt' else 'clear')
@@ -172,15 +179,6 @@ def enemyLookup(index):
     else:
         return Spider()
 
-
-
-# Constant variables
-GUI_LENGTH = 100
-GUI_ENTITY_SPACE = 10
-GUI_PLAYER_INDEX = 5
-GUI_ENEMY_INDEX = 25
-MAX_ENEMY_COUNT = 3
-
 optionsList = []
 
 # Try to extract the options from options.txt
@@ -204,5 +202,5 @@ except:
     MAX_ENEMY_COUNT = 3
     writeOptions()
     printText("WARNING: Could not read options.txt. Options have been reset and options.txt has been modified appropriately.`"
-          "Press any key to continue. . .")
+              "Press any key to continue. . .")
     instantInput()

@@ -19,7 +19,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
     # [1] Start a new game
     if reply == 1:
         # New game setup
-        difficulty = 1
+        difficulty = 5
         world = 0
         GUI = GUIclass(world)
         player = Player()
