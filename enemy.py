@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from gamelib import *
+from item import *
 from entity import Entity
 
 class Enemy(Entity):
@@ -20,6 +21,8 @@ class Enemy(Entity):
         self.EXP = 10
     def introText(self):
         return "Something's wrong... You've come across NULL`"
+    def drops(self, battleItems):
+        if random() < 0.50: battleItems.append(Item())
     
     # Carries out any attack, and provides all necessary prompts and textboxes
     #       PLAYER - The game's current player
@@ -72,6 +75,10 @@ class Spider(Enemy):
                     "A spider appears. What a hoser.`",
                     "A spider arrives. Why is it so big??`"]
         return choice(textList)
+    def drops(self, battleItems):
+        if random() < 0.25: battleItems.append(EggCracker())
+            
+    
 
 class Bat(Enemy):
     def __init__(self):
@@ -92,6 +99,8 @@ class Bat(Enemy):
                     "A bat appears...`",
                     "A bat appears...`"]
         return choice(textList)
+    def drops(self, battleItems):
+        if random() < 0.20: battleItems.append(Grape())
 
 class SpiderCultist(Enemy):
     def __init__(self):
@@ -125,6 +134,8 @@ class SpiderCultist(Enemy):
             printText("The Spider Cultist summons a Spider to the fight`"
                       "Press any key to continue. . . ")
             instantInput()
+    def drops(self, battleItems):
+      if random() < 0.20: battleItems.append(AAABattery())
 
 class SpiderLord(Enemy):
     def __init__(self):

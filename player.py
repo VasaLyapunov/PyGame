@@ -248,13 +248,15 @@ class Player(Entity):
             
     # Removes all dead enemies and redraws the 'enemyList'
     #       ENEMY[] 'enemyList' - List of enemies
+    #       ITEM[] 'battleItems' - List of items dropped in battle so far
     #       GUI  'GUI' - The game's current GUI
-    def removeDeadEnemies(self, enemyList, GUI):
+    def removeDeadEnemies(self, enemyList, battleItems, GUI):
         battleEXP = 0
         removeList = []
         for enemy in enemyList:
             if enemy.HP == 0:
                 battleEXP += enemy.EXP
+                enemy.drops(battleItems)
                 removeList.append(enemy)
         for enemy in removeList:
             enemyList.remove(enemy)
@@ -264,10 +266,11 @@ class Player(Entity):
     
     # Carries out any attack, and provides all necessary prompts and textboxes
     #       ENEMY[] 'enemyList' - List of enemies
+    #       ITEM[] 'battleItems' - List of items dropped in battle so far
     #       GUI  'GUI' - The game's current GUI
     #       INT  'specialMoveIndex' - The index specifying which special move to carry out (Or 0, if a regular attack)
     #       FLT  'multiplier' - Multiplies damage
-    def handleAttack(self, enemyList, GUI, specialMoveIndex, multiplier):
+    def handleAttack(self, enemyList, battleItems, GUI, specialMoveIndex, multiplier):
         battleEXP = 0
         # NOT a special move - (Regular attack)
         if specialMoveIndex == 0:
@@ -299,7 +302,7 @@ class Player(Entity):
                       "Press any key to continue. . . ")
             instantInput()
             
-            battleEXP += self.removeDeadEnemies(enemyList, GUI)
+            battleEXP += self.removeDeadEnemies(enemyList, battleItems, GUI)
             GUI.drawHealthAndPower(self, enemyList)
         
         # [1] Relaxing Yoga 
@@ -346,9 +349,9 @@ class Player(Entity):
         return battleEXP
 
     # Adds an item to the player's inventory
-    #       INT 'itemID' - The ID of the item to be added
-    def addItem(self, itemID):
-        self.itemList.append(itemID)
+    #       ITEM 'item' - The actual item given
+    #def addItem(self, item):
+        
     
     # Handles all the menus required to use an Item, and calls an Item's use function if successful
     #       GUI 'GUI' - The game's current GUI

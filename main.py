@@ -48,6 +48,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                 encounterCount += 1
                 gamelog.write("Encounter #" + str(encounterCount) + ":\n")
                 battleEXP = 0
+                battleItems = []
                 
                 # Enemy Spawning: (Still being changed)
                 # Boss fight
@@ -70,7 +71,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                     gamelog.write("    " + enemy.name + "\n")
                 
                 # POSSIBLE DIFFICULTY HANDLING: for i in range(0,len(enemyList)):
-                difficulty = difficulty + 1
+                
                 GUI.drawEntity(enemyList)
                 GUI.drawHealthAndPower(player, enemyList)
                 GUI.printGUI()
@@ -88,10 +89,21 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
 
                     # Check if battle is over
                     if len(enemyList) == 0:
+                        difficulty = difficulty + 1
                         player.EXP += battleEXP
                         player.HP = player.MAXHP
                         player.PWR = player.MAXPWR
                         gamelog.write("You won the fight!\n\n")
+                        
+                        # Item Checks
+                        if(len(battleItems) > 0):
+                            itemString = "You found some items!``"
+                            for item in battleItems:
+                                itemString += item.name + "`"
+                                player.itemList.append(item)
+                            itemString += "`Press any key to continue. . ."
+                            printText(itemString)
+                        
                         printText("You won the battle!`" +
                                   "You gained " + str(battleEXP) + " EXP`" +
                                   "Press any key to continue. . .")
@@ -114,7 +126,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                 
                     # [1] Attack
                     if reply == 1:
-                        result = player.handleAttack(enemyList, GUI, 0, 1.0)
+                        result = player.handleAttack(enemyList, battleItems, GUI, 0, 1.0)
                         # User went back
                         if result == -1:
                             enemyCanAct = False
@@ -154,7 +166,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                             if reply == 1:
                                 if player.PWR >= 4:
                                     player.PWR -= 4
-                                    battleEXP += player.handleAttack(enemyList, GUI, reply, 1.0)                                
+                                    battleEXP += player.handleAttack(enemyList, battleItems, GUI, reply, 1.0)                                
                                 else:
                                     enoughPWR = False
 
@@ -162,7 +174,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                             elif reply == 2:
                                 if player.PWR >= 3:
                                     player.PWR -= 3
-                                    battleEXP += player.handleAttack(enemyList, GUI, reply, 0.8)
+                                    battleEXP += player.handleAttack(enemyList, battleItems, GUI, reply, 0.8)
                                 else:
                                     enoughPWR = False
                             
@@ -170,7 +182,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                             elif reply == 3:
                                 if player.PWR >= 3:
                                     player.PWR -= 3
-                                    result = player.handleAttack(enemyList, GUI, 0, 2.0)
+                                    result = player.handleAttack(enemyList, battleItems, GUI, 0, 2.0)
                                     # User went back
                                     if result == -1:
                                         enemyCanAct = False
@@ -196,10 +208,11 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                         GUI.printGUI()
                         enemyList.clear()
                         GUI.eraseEnemies()
+                        player.HP = player.MAXHP
+                        player.PWR = player.MAXPWR
                         printText("You booked it out of there!`" +
                                   "Press ANY KEY to continue...")
                         instantInput()
-                        difficulty -= 1
                         gamelog.write("You ran away from the fight\n\n")
                         break
 

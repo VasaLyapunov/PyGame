@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from random import randint
+from random import random
 from random import choice
 import time
 import sys
