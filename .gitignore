@@ -3,3 +3,4 @@ __pycache__/
 pytest.py
 gamelog.txt
 changelog.txt
+.idea/*
