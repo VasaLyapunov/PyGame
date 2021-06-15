@@ -351,7 +351,13 @@ class Player(Entity):
     # Adds an item to the player's inventory
     #       ITEM 'item' - The actual item given
     def addItem(self, item):
-        player.itemList.append(item)
+        # Loop through player's items to see if we can add new item to a stack
+        itemType = type(item)
+        for heldItem in self.itemList:
+            if(type(heldItem) == itemType):
+                heldItem.quantity = heldItem.quantity + 1
+                return
+        self.itemList.append(item)
     
     # Handles all the menus required to use an Item, and calls an Item's use function if successful
     #       GUI 'GUI' - The game's current GUI
@@ -369,7 +375,7 @@ class Player(Entity):
         clear() 
         # Print all items and prompt user
         for i in range(itemCount):
-            printText("[" + str(i+1) + "] " + self.itemList[i].name + "``" + self.itemList[i].description)
+            printText("[" + str(i+1) + "] " + self.itemList[i].name + " (x" + str(self.itemList[i].quantity) + ")``" + self.itemList[i].description)
         printText("[" + str(itemCount+1) + "] BACK")
         reply = printPrompt("Choose an item...", itemCount+1, True)
         
@@ -381,7 +387,8 @@ class Player(Entity):
         clear()
         GUI.printGUI()
         self.itemList[reply-1].use(self, enemyList, GUI)
-        del self.itemList[reply-1]
+        if(self.itemList[reply-1].quantity == 0):
+            del self.itemList[reply-1]
         printText("Press any key to continue. . .")
         instantInput()
         return 1
