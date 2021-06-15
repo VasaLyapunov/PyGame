@@ -68,8 +68,6 @@ def printText(message):
         bot += "═"
     print(bot + "╝")
 
-
-
 # On windows console: waits until a a key is pressed and returns its ordinal form, take 48 (This way, entering 1 returns 1, etc.)
 # On any other OS, calls instantInput(), and converts input to an int. If invalid, returns 0
 def instantInput():
@@ -80,12 +78,11 @@ def instantInput():
             return 0
     else:               # Windows here
         while True:
-            key = ord(msvcrt.getch()) - 48
-            if key != -48:
-                return key
-            time.sleep(0.1)
-
-
+            key = ord(msvcrt.getch()) #- 48
+            # Using getch() inherantly breaks signals; if user sends ctrl-c, exit manually 
+            if key == 3:
+                sys.exit(0)
+            return key - 48
 
 # Prints a prompt and re-prompts the player until a valid choice has been selected
 #   STR  'message' - Prompts this message (Must also contain choices)
@@ -103,9 +100,6 @@ def printPrompt(message, optionCount, GUI):
         retryString += ". . . "
         printText(retryString)
         reply = instantInput()
-    
-
-
 
 # Prints messages one character at a time, all fancy-like
 # Note: Definitely does not work on the IDLE console
