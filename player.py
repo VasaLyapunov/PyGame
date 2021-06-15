@@ -24,7 +24,7 @@ class Player(Entity):
         self.SPD = 5
         self.LCK = 5
         
-        self.itemList = [EggCracker(), Grape(), EggCracker(), AAABattery()]
+        self.itemList = [EggCracker(quantity=2), Grape(), AAABattery()]
 
 
 
@@ -350,8 +350,8 @@ class Player(Entity):
 
     # Adds an item to the player's inventory
     #       ITEM 'item' - The actual item given
-    #def addItem(self, item):
-        
+    def addItem(self, item):
+        player.itemList.append(item)
     
     # Handles all the menus required to use an Item, and calls an Item's use function if successful
     #       GUI 'GUI' - The game's current GUI
@@ -380,7 +380,7 @@ class Player(Entity):
         # Use the selected item
         clear()
         GUI.printGUI()
-        self.itemList[reply-1].use(self, enemyList, GUI);
+        self.itemList[reply-1].use(self, enemyList, GUI)
         del self.itemList[reply-1]
         printText("Press any key to continue. . .")
         instantInput()

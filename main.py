@@ -100,7 +100,7 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                             itemString = "You found some items!``"
                             for item in battleItems:
                                 itemString += item.name + "`"
-                                player.itemList.append(item)
+                                player.addItem(item)
                             itemString += "`Press any key to continue. . ."
                             printText(itemString)
                         
