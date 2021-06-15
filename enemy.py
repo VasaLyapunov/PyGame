@@ -53,8 +53,6 @@ class Enemy(Entity):
                   "Press any key to continue. . . ")
         instantInput()
 
-
-
 class Spider(Enemy):
     def __init__(self):
         self.name = "Spider"
@@ -77,8 +75,6 @@ class Spider(Enemy):
         return choice(textList)
     def drops(self, battleItems):
         if random() < 0.25: battleItems.append(EggCracker())
-            
-    
 
 class Bat(Enemy):
     def __init__(self):

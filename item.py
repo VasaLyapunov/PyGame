@@ -18,8 +18,6 @@ class Item():
     def effects(self, player, enemyList, GUI):
         printText("You inspect the item carefully, but you cannot find a use for it...")
 
-
-
 class EggCracker(Item):
     def setAttributes(self):
         self.name = "Egg Cracker"
@@ -35,7 +33,6 @@ class EggCracker(Item):
         printText(self.useText + "`"
                   "You were healed for " + str(HPdifference) + " health!")
 
-
 class Grape(Item):
     def setAttributes(self):
         self.name = "Grape"
@@ -50,7 +47,6 @@ class Grape(Item):
         GUI.printGUI()
         printText(self.useText + "`"
                   "You were healed for " + str(HPdifference) + " health!")
-
 
 class AAABattery(Item):
     def setAttributes(self):
