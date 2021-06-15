@@ -25,8 +25,6 @@ class GUIclass:
             self.layers.append("")
             self.eraseLayer(i)
     
-    
-    
     # Clears the console and prints whatever is currently in the GUI in the correct format
     def printGUI(self):
         clear()
@@ -41,13 +39,11 @@ class GUIclass:
         for layer in self.layers:
             print("║" + layer + "║")
         
-        # Generates and prints the roof of the GUI   ie. "╚══════════╝"
+        # Generates and prints the bottom of the GUI   ie. "╚══════════╝"
         bot = "╚"
         for i in range(0,GUI_LENGTH):
             bot += "═"
         print(bot + "╝")
-
-
 
     # Provides flavor text for the current location based on the world variant
     def getIdleText(self):
@@ -66,8 +62,6 @@ class GUIclass:
                             
         return (choice(idleTextList))
     
-    
-    
     # Modifies the layer in 'self.layers[]' at 'layerIndex' to contain the passed 'string', starting at 'startingIndex'
     #       INT  'layerIndex' - The index of the layer on which 'string' is drawn on
     #       STR  'string' - The string that is drawn onto the passed given layer
@@ -77,10 +71,8 @@ class GUIclass:
     # PRECNT: 'startingIndex' + the length of 'string' must not exceed the final index of the layer at 'layerIndex'
     def drawLayerSection(self, layerIndex, string, startingIndex):
         self.layers[layerIndex] = self.layers[layerIndex][:startingIndex] + string + self.layers[layerIndex][startingIndex + len(string):]
-    
-    
-    
-     # Resets the specifie section of the specified layer to it's blank variant, leaving only the background
+
+    # Resets the specifie section of the specified layer to it's blank variant, leaving only the background
     #       INT  'layerIndex' - The index of the layer to reset
     #       INT  'sectionLength' - Length of the section to erase
     #       INT  'startingIndex' - The index on the passed layer on which the the erasing will begin
@@ -93,8 +85,6 @@ class GUIclass:
             replacementString += self.worldList[self.world][layerIndex][:sectionLength - len(replacementString)]
         self.layers[layerIndex] = self.layers[layerIndex][:startingIndex] + replacementString + self.layers[layerIndex][startingIndex + sectionLength:]
         
-    
-    
     # Resets the specified layer to it's blank variant, leaving only the background
     #       INT  'layerIndex' - The index of the layer to reset
     #
@@ -107,8 +97,6 @@ class GUIclass:
         # Part of the preset in 'worldList[]' is appended to the current 'layer', bringing its total length up to 'GUI_LENGTH'
         layer += self.worldList[self.world][layerIndex][:GUI_LENGTH % 50]
         self.layers[layerIndex] = layer
-    
-    
     
     # Draws the enemy or the player in their corresponding locations
     #       PLAYER 'entity' - Player object
@@ -137,8 +125,6 @@ class GUIclass:
                         newLayer += entity.sprite[i][j]
                 self.drawLayerSection(i+2, newLayer, GUI_PLAYER_INDEX)
     
-    
-    
     # Draws the health and power of both the player and all enemies
     #   PLAYER 'player' - The player
     #   ENEMY[] 'enemyList' - The list of enemies
@@ -154,23 +140,17 @@ class GUIclass:
         # Draw player power
         power = str(player.PWR) + "/" + str(player.MAXPWR)
         self.drawLayerSection(1, power, GUI_PLAYER_INDEX)
-    
-    
-    
+
     # Resets the health layer (0) and the power section (first part of layer 1) to their blank variants
     def eraseHealthAndPower(self):
         self.eraseLayer(0)
         self.eraseLayerSection(1, 12, 0)
-    
-    
-    
+
     # Replaces each enemy drawing with the current world's background
     def eraseEnemies(self):
         for i in range(0,5):
             self.eraseLayerSection(i, GUI_LENGTH - GUI_ENEMY_INDEX, GUI_ENEMY_INDEX)
 
-    
-    
     # Draws each enemy's index
     #   ENEMY[] 'enemyList' - The list of enemies
     # Note: To erase indexes, eraseHealthAndPower() works just fine
