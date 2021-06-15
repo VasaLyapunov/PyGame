@@ -4,3 +4,6 @@ pytest.py
 gamelog.txt
 changelog.txt
 .idea/*
+dist/*
+build/*
+main.spec
