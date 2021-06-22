@@ -37,9 +37,8 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
             printText(GUI.getIdleText())
             reply = printPrompt("What do you want to do?`"
                                 "[1] Explore`"
-                                "[2] Use Item`"
-                                "[3] Explode (This kills you!)`"
-                                "[4] Check Stats", 4, GUI)
+                                "[2] End Game`"
+                                "[3] Check Stats", 4, GUI)
 
             # [1] Explore - (Battle)
             if reply == 1:
@@ -241,25 +240,18 @@ while True: # MAIN MENU LOOP - (Runs until user exits)
                         if player.HP == 0:
                             break
                         
-                    GUI.printGUI()  
+                    GUI.printGUI()
 
-            # [2] Use Item
+            # [2] End Game
             elif reply == 2:
-                printText("You used an item. It does nothing`" +
-                          "Press ANY KEY to continue...")
-                instantInput()
-
-
-            # [3] Explode
-            elif reply == 3:
                 clear()
-                printText("You exploded... You're dead :(`" +
+                printText("You have suddenly... died :(`" +
                           "Press ANY KEY to return to main menu")
                 instantInput()
                 break
 
-            # [4] Check Stats
-            elif reply == 4:
+            # [3] Check Stats
+            elif reply == 3:
                 clear()
                 player.printStats(False, False)
                 printText("Press ANY KEY to continue...")
